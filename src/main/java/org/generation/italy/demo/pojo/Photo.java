@@ -2,8 +2,6 @@ package org.generation.italy.demo.pojo;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,15 +43,12 @@ public class Photo {
 	private Boolean visible;
 	
 	@OneToMany(mappedBy = "photo", cascade=CascadeType.REMOVE, fetch = FetchType.EAGER)
-	@JsonIgnore
 	private List<Comment> commentList;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JsonIgnore
 	private List<Category> categoryList;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JsonIgnore
 	private List<Tag> tagList;
 	
 

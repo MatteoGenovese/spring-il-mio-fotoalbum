@@ -1,11 +1,16 @@
-package org.generation.italy.demo.controller;
+ package org.generation.italy.demo.controller;
 
 import java.util.List;
 import java.util.Optional;
 
+import org.generation.italy.demo.pojo.Tag;
+import org.generation.italy.demo.pojo.Category;
 import org.generation.italy.demo.pojo.Photo;
+import org.generation.italy.demo.srv.CategoryServ;
 import org.generation.italy.demo.srv.PhotoServ;
+import org.generation.italy.demo.srv.TagServ;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,14 +18,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RequestMapping("/admin")
-public class PhotoController {
-	
+@Controller
+@RequestMapping("/")
+public class MainController {
+
 	@Autowired
 	private PhotoServ photoServ;
 	
-	@GetMapping("/")
-	public String getHome(Model model) {
+	@Autowired
+	private TagServ tagServ;
+	
+	@Autowired
+	private CategoryServ categoryServ;	
+	
+
+	
+	@GetMapping("/admin/photos")
+	public String getHomeForAdmin(Model model) {
 		
 		List<Photo> photoList = photoServ.findAll();
 		model.addAttribute("photoList", photoList);
@@ -28,19 +42,7 @@ public class PhotoController {
 		return "homePage";
 	}
 	
-	@GetMapping("/{id}")
-	public String getPhotoById(@PathVariable("id") int id, Model model)
-	{
-		Optional <Photo> optPhoto = photoServ.getPhotoById(id);
-		
-		Photo photo =optPhoto.get();
-		
-		model.addAttribute("photo", photo);
-		
-		return "show";
-	}
-	
-	@GetMapping("/edit/{id}")
+	@GetMapping("/admin/photos/edit/{id}")
 	public String editPhoto(@PathVariable("id") int id, Model model,Error e, BindingResult bindingResult, RedirectAttributes redirectAttributes)
 	{
 
@@ -55,6 +57,13 @@ public class PhotoController {
 			return "redirect:/photo/create";
 		}
 		
+		List <Tag> tagList = tagServ.findAll();
+		model.addAttribute("tagList", tagList);
+		
+		List <Category> categoryList = categoryServ.findAll();
+		model.addAttribute("categoryList", categoryList);
+		
+		
 		Optional<Photo> optPhoto = photoServ.getPhotoById(id);
 		
 		Photo photo =optPhoto.get();
@@ -65,7 +74,11 @@ public class PhotoController {
 		model.addAttribute("h1text", "Update photo:");
 		
 		
-		return "photo/form";
+		return "form";
 	}
+	
 
+	
+
+	
 }

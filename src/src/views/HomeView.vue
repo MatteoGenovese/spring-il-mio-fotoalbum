@@ -9,7 +9,7 @@
 
 
 
-      <div v-for="photo in photoList" v-if="isloaded" :key="photo.id" class="col-4 mb-4">
+      <div v-for="photo in photoList" v-if="isloaded" :key="photo.id" class="col-4 mb-4 ">
 
         <CardComponent :photo="photo"/>
 

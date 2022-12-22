@@ -10,9 +10,8 @@
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         
-                        <a href="http://localhost:8080/admin" class="px-3">Login</a>
+                        <a href="http://localhost:8080/photos/admin/all" class="px-3">Login</a>
                     </li>
-
                 </ul>
             </div>
         </nav>
